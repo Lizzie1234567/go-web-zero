@@ -233,7 +233,27 @@ http.Handle 第一个参数路由路径“/home”
 第二个参数 Handler
 
 http.HandleFunc 第一个参数路由路径“/home”
-第二个参数 Handler **函数**（http.HandleFunc  **将Handler函数转换为Handler**）
+第二个参数 Handler **函数**（http.HandleFuc  **将Handler函数转换为Handler**）
+
+
+**自己体会**
+本质上是调用Handle函数（第一个是地址，第二个是handler）
+给默认的路由器里面加上路径选择。
+
+handler：只要能实现ServeHTTP函数的类型，都是handler
+
+func (m *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("home handler"))
+}
+
+
+HandleFunc本质上是调用handle函数，把第二个函数，变成一个函数满足ServeHTTP形式的handler类型，才可以套用handle函数。
+
+怎么变成的呢？
+
+就是调用的HandlerFuc,它可以把第二个函数，变成一个函数满足ServeHTTP形式的handler类型。
+
+
 
 ## p4 内置的Handlers
 
